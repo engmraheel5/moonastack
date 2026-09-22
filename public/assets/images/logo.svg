@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 80" width="310" height="80" fill="none">
+  <defs>
+    <filter id="cyanGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00d1ff" flood-opacity="0.6"/>
+    </filter>
+    <linearGradient id="crescentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d1ff"/>
+      <stop offset="100%" stop-color="#0088cc"/>
+    </linearGradient>
+    <linearGradient id="topFace1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#608ba9"/>
+      <stop offset="100%" stop-color="#4a6f8b"/>
+    </linearGradient>
+    <linearGradient id="topFace2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4d718e"/>
+      <stop offset="100%" stop-color="#385770"/>
+    </linearGradient>
+    <linearGradient id="topFace3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b5b75"/>
+      <stop offset="100%" stop-color="#2a455a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Group Icon -->
+  <g transform="translate(10, 0)">
+    <!-- Cyan Crescent Moon -->
+    <path d="M 46 16 A 31 31 0 1 0 46 64 A 25 25 0 1 1 46 16 Z" fill="url(#crescentGrad)" filter="url(#cyanGlow)" opacity="0.95"/>
+
+    <!-- Bottom Layer Plate -->
+    <g id="layer3" transform="translate(48, 48)">
+      <!-- Left bevel -->
+      <polygon points="-24,0 0,9 0,14 -24,5" fill="#1b2d3b"/>
+      <!-- Right bevel -->
+      <polygon points="0,9 24,0 24,5 0,14" fill="#253e52"/>
+      <!-- Top face -->
+      <polygon points="0,-9 24,0 0,9 -24,0" fill="url(#topFace3)"/>
+    </g>
+
+    <!-- Middle Layer Plate -->
+    <g id="layer2" transform="translate(48, 38)">
+      <!-- Left bevel -->
+      <polygon points="-24,0 0,9 0,14 -24,5" fill="#253e52"/>
+      <!-- Right bevel -->
+      <polygon points="0,9 24,0 24,5 0,14" fill="#324f66"/>
+      <!-- Top face -->
+      <polygon points="0,-9 24,0 0,9 -24,0" fill="url(#topFace2)"/>
+    </g>
+
+    <!-- Top Layer Plate -->
+    <g id="layer1" transform="translate(48, 28)">
+      <!-- Left bevel -->
+      <polygon points="-24,0 0,9 0,14 -24,5" fill="#324f66"/>
+      <!-- Right bevel -->
+      <polygon points="0,9 24,0 24,5 0,14" fill="#446885"/>
+      <!-- Top face -->
+      <polygon points="0,-9 24,0 0,9 -24,0" fill="url(#topFace1)"/>
+    </g>
+  </g>
+
+  <!-- Brand Typography -->
+  <text x="100" y="50" font-family="'Inter', -apple-system, sans-serif" font-size="30" font-weight="600" letter-spacing="-0.02em">
+    <tspan fill="#64748b" font-weight="500">Moona</tspan><tspan fill="#8fa1b8" font-weight="600">Stack</tspan>
+  </text>
+</svg>

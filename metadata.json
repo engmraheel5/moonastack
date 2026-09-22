@@ -1,0 +1,6 @@
+{
+  "name": "MoonaStack",
+  "description": "MoonaStack is an enterprise IT services and technology solutions company specializing in scalable web applications, AI automation, and high-performance data systems.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

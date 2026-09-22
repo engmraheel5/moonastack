@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none">
+  <defs>
+    <filter id="markGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00d1ff" flood-opacity="0.65"/>
+    </filter>
+    <linearGradient id="crescentGradMark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d1ff"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="topFaceMark1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6ba0c7"/>
+      <stop offset="100%" stop-color="#4d7494"/>
+    </linearGradient>
+    <linearGradient id="topFaceMark2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5581a3"/>
+      <stop offset="100%" stop-color="#3c5e79"/>
+    </linearGradient>
+    <linearGradient id="topFaceMark3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#416582"/>
+      <stop offset="100%" stop-color="#2d495f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Cyan Crescent Moon -->
+  <path d="M 46 16 A 34 34 0 1 0 46 76 A 28 28 0 1 1 46 16 Z" fill="url(#crescentGradMark)" filter="url(#markGlow)"/>
+
+  <!-- 3D Isometric Stack -->
+  <!-- Layer 3 (Bottom) -->
+  <g transform="translate(54, 60)">
+    <polygon points="-26,0 0,10 0,16 -26,6" fill="#1b2d3b"/>
+    <polygon points="0,10 26,0 26,6 0,16" fill="#253e52"/>
+    <polygon points="0,-10 26,0 0,10 -26,0" fill="url(#topFaceMark3)"/>
+  </g>
+
+  <!-- Layer 2 (Middle) -->
+  <g transform="translate(54, 48)">
+    <polygon points="-26,0 0,10 0,16 -26,6" fill="#253e52"/>
+    <polygon points="0,10 26,0 26,6 0,16" fill="#324f66"/>
+    <polygon points="0,-10 26,0 0,10 -26,0" fill="url(#topFaceMark2)"/>
+  </g>
+
+  <!-- Layer 1 (Top) -->
+  <g transform="translate(54, 36)">
+    <polygon points="-26,0 0,10 0,16 -26,6" fill="#324f66"/>
+    <polygon points="0,10 26,0 26,6 0,16" fill="#446885"/>
+    <polygon points="0,-10 26,0 0,10 -26,0" fill="url(#topFaceMark1)"/>
+  </g>
+</svg>
