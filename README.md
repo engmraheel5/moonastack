@@ -57,6 +57,31 @@ If you prefer not to use GitHub Actions:
 
 ---
 
+### Custom Domain Configuration
+
+To connect your custom domain (e.g. `moonastack.tech` or `www.moonastack.tech`):
+
+1. **Add `CNAME` in your project**:
+   - Create a file named `CNAME` inside the `public/` folder containing only your domain name (e.g., `moonastack.tech` or `www.moonastack.tech`).
+   - Any file in `public/` is automatically copied into `dist/` during build so GitHub Pages recognizes it.
+2. **Configure your DNS provider** (Namecheap, GoDaddy, Cloudflare, etc.):
+   - **For Apex Domain (`yourdomain.com`)**:
+     Add 4 `A` records pointing to GitHub's IPs:
+     - `185.199.108.153`
+     - `185.199.109.153`
+     - `185.199.110.153`
+     - `185.199.111.153`
+   - **For Subdomain or `www` (`www.yourdomain.com`)**:
+     Add a `CNAME` record:
+     - Name/Host: `www`
+     - Value/Target: `<YOUR-GITHUB-USERNAME>.github.io.`
+3. **Set Custom Domain in GitHub**:
+   - Go to **Settings > Pages > Custom domain** in your repository.
+   - Enter your domain name and click **Save**.
+   - Check **Enforce HTTPS** (once DNS verification completes).
+
+---
+
 ## 📊 Google Drive & Sheets "Site Contact" Lead Dispatch
 
 The contact form is pre-configured to automatically record submissions into a spreadsheet named **Site Contact** in your Google Drive under your account (`codgramming.raheel@gmail.com`).

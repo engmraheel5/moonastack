@@ -9,7 +9,7 @@ function initMoonaStackApp() {
   // Google Apps Script Web App Endpoint for Form Submissions
   // Automatically logs inquiries into your Google Drive under "MoonaStack Contacts/Site Contact" sheet.
   // Follow the setup guide in the modal or README to deploy your Web App.
-  const GOOGLE_APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+  const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyieGaNcB5GBoRK-uIUqk_chiuLnSM0opHfPcSmYf1oFIFxUQFzyXdlml3wa7DUFphf9g/exec';
 
   /* ==========================================================================
      1. Mobile Navigation & Drawer Controller
