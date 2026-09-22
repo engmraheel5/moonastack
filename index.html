@@ -181,17 +181,204 @@
           </div>
         </div>
 
-        <!-- Interactive Architecture Constellation Canvas -->
-        <div class="hero-visual reveal delay-1">
-          <div class="hero-visual-card">
-            <div class="canvas-container">
-              <canvas id="architectureCanvas"></canvas>
-              <div class="visual-overlay-info">
-                <div class="visual-status">
-                  <span class="badge-dot"></span>
-                  <span>SYSTEM_NODE: ACTIVE</span>
+        <!-- 4D Anamorphic Spatial Stage: MoonaStack Walking Out of Screen -->
+        <div class="hero-visual reveal delay-1" id="spatial4DContainer">
+          <div class="spatial-4d-card" id="spatial4DCard">
+            <!-- 4D Cinema Frame Header & HUD -->
+            <div class="spatial-hud-header">
+              <div class="spatial-hud-badge">
+                <span class="badge-dot pulse-red"></span>
+                <span>4D SPATIAL DISPLAY</span>
+              </div>
+              <div class="spatial-depth-meter" id="spatialDepthMeter">
+                Z-DEPTH: <span class="depth-val text-cyan" id="depthValue">+160mm</span> <span class="depth-status">[BREACHING SCREEN]</span>
+              </div>
+              <button type="button" class="spatial-action-btn" id="spatialBreachBtn" title="Trigger full 4D forward surge">
+                ⚡ Step Closer
+              </button>
+            </div>
+
+            <!-- The Anamorphic Screen Box with 3D Depth & Overflow Breakout -->
+            <div class="spatial-screen-stage" id="spatialScreenStage">
+              <!-- Corner Optical Targeting Brackets -->
+              <div class="screen-bracket top-left"></div>
+              <div class="screen-bracket top-right"></div>
+              <div class="screen-bracket bottom-left"></div>
+              <div class="screen-bracket bottom-right"></div>
+
+              <!-- Receding 3D Cyberspace Chamber Floor & Starfield -->
+              <div class="spatial-tunnel-chamber">
+                <div class="tunnel-grid-floor"></div>
+                <div class="tunnel-portal-core"></div>
+                <canvas id="architectureCanvas"></canvas>
+              </div>
+
+              <!-- Holographic Horizon Glass Line (The physical boundary of the screen) -->
+              <div class="screen-glass-barrier">
+                <div class="glass-scan-line"></div>
+                <div class="screen-bezel-bottom">
+                  <span class="bezel-mark">◀ SCREEN BOUNDARY THRESHOLD ▶</span>
                 </div>
-                <div class="visual-fps">INTERACTIVE MESH • TOUCH &amp; CURSOR READY</div>
+              </div>
+
+              <!-- ============================================================
+                   THE MOONASTACK 4D WALKER (Stepping OUT of the Screen)
+                   ============================================================ -->
+              <div class="moonastack-4d-walker" id="moonaWalker">
+                <!-- Ground Footprint Shockwaves (expanding OUTSIDE the screen threshold) -->
+                <div class="step-shockwave ring-1"></div>
+                <div class="step-shockwave ring-2"></div>
+                <div class="step-ground-reflection"></div>
+
+                <!-- 3D Walker Figure (Layered Vector & CSS 3D Depth) -->
+                <div class="walker-figure-wrap">
+                  <!-- Walker Drop Shadow on Floor & Extending Outside Bezel -->
+                  <div class="walker-shadow"></div>
+
+                  <!-- SVG Character Rig: Cybernetic Architect with Real Biomechanic Walking Limbs -->
+                  <svg class="walker-character-svg" viewBox="0 0 320 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="cyberSuitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#0e234a"/>
+                        <stop offset="50%" stop-color="#163773"/>
+                        <stop offset="100%" stop-color="#08142b"/>
+                      </linearGradient>
+                      <linearGradient id="energyCoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#38bdf8"/>
+                        <stop offset="50%" stop-color="#00d1ff"/>
+                        <stop offset="100%" stop-color="#818cf8"/>
+                      </linearGradient>
+                      <filter id="neonGlowCyan" x="-40%" y="-40%" width="180%" height="180%">
+                        <feGaussianBlur stdDeviation="4" result="blur"/>
+                        <feMerge>
+                          <feMergeNode in="blur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                      <filter id="intenseBreachGlow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="8" result="blur1"/>
+                        <feGaussianBlur stdDeviation="3" result="blur2"/>
+                        <feMerge>
+                          <feMergeNode in="blur1"/>
+                          <feMergeNode in="blur2"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    <!-- Back Leg (Receding deep into screen) -->
+                    <g class="limb-leg-back">
+                      <path d="M142 220 L132 290 L124 350 L110 354" stroke="#0f2652" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M132 290 L124 350" stroke="#00d1ff" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
+                      <polygon points="106,350 126,350 122,360 102,360" fill="#0c1e40"/>
+                    </g>
+
+                    <!-- Back Arm (Swinging backward) -->
+                    <g class="limb-arm-back">
+                      <path d="M125 130 L102 185 L90 230" stroke="#0d2146" stroke-width="12" stroke-linecap="round"/>
+                      <circle cx="102" cy="185" r="7" fill="#1e3a8a"/>
+                      <circle cx="90" cy="230" r="5" fill="#00d1ff" filter="url(#neonGlowCyan)"/>
+                    </g>
+
+                    <!-- Torso & Core (Bobbing in rhythm) -->
+                    <g class="limb-torso">
+                      <!-- Cybernetic Cape / Energy Mantle -->
+                      <path d="M130 125 L105 240 L125 248 L145 220 Z" fill="rgba(0, 209, 255, 0.12)" stroke="rgba(0, 209, 255, 0.3)"/>
+                      <!-- Armored Body -->
+                      <polygon points="135,115 185,115 195,190 160,225 125,190" fill="url(#cyberSuitGrad)" stroke="#1e40af" stroke-width="2"/>
+                      <!-- Chest Pauldrons -->
+                      <path d="M122 118 L142 108 L150 135 L125 138 Z" fill="#1e3a8a" stroke="#00d1ff" stroke-width="1.5"/>
+                      <path d="M198 118 L178 108 L170 135 L195 138 Z" fill="#1e3a8a" stroke="#00d1ff" stroke-width="1.5"/>
+                      <!-- MoonaStack Hexagonal Core Reactor -->
+                      <polygon points="160,140 174,148 174,166 160,174 146,166 146,148" fill="url(#energyCoreGrad)" filter="url(#intenseBreachGlow)"/>
+                      <polygon points="160,145 169,151 169,163 160,169 151,163 151,151" fill="#ffffff" opacity="0.8"/>
+                      <!-- Conduit Circuit Lines -->
+                      <line x1="160" y1="174" x2="160" y2="215" stroke="#00d1ff" stroke-width="2" filter="url(#neonGlowCyan)"/>
+                      <line x1="146" y1="166" x2="132" y2="195" stroke="#00d1ff" stroke-width="1.5"/>
+                      <line x1="174" y1="166" x2="188" y2="195" stroke="#00d1ff" stroke-width="1.5"/>
+                    </g>
+
+                    <!-- Cyber Helmet & Scanning Visor -->
+                    <g class="limb-head">
+                      <!-- Helmet Shell -->
+                      <path d="M142 65 C142 45, 178 45, 178 65 L182 92 L160 106 L138 92 Z" fill="#081630" stroke="#00d1ff" stroke-width="2"/>
+                      <!-- Tech Antennas / Crest -->
+                      <polygon points="160,40 164,52 156,52" fill="#00d1ff" filter="url(#neonGlowCyan)"/>
+                      <!-- Luminous Scanning Visor (Sweeping Laser) -->
+                      <path d="M144 72 Q160 68 176 72 Q160 84 144 72 Z" fill="#00d1ff" filter="url(#intenseBreachGlow)"/>
+                      <ellipse cx="160" cy="74" rx="8" ry="3" fill="#ffffff"/>
+                      <line x1="140" y1="74" x2="180" y2="74" stroke="#ffffff" stroke-width="1.5" opacity="0.9"/>
+                    </g>
+
+                    <!-- FRONT REACHING ARM: Reaches FORWARD out towards the user! -->
+                    <g class="limb-arm-front">
+                      <!-- Upper arm -->
+                      <path d="M185 125 L215 160" stroke="#1d4ed8" stroke-width="14" stroke-linecap="round"/>
+                      <!-- Forearm reaching OUT of screen with perspective scaling -->
+                      <path d="M215 160 L255 185" stroke="#2563eb" stroke-width="16" stroke-linecap="round"/>
+                      <circle cx="215" cy="160" r="9" fill="#00d1ff" filter="url(#neonGlowCyan)"/>
+                      <!-- Cybernetic Hand with Extended Glowing Fingers breaking border -->
+                      <g class="reaching-hand">
+                        <circle cx="258" cy="186" r="10" fill="#0c1f44" stroke="#00d1ff" stroke-width="2"/>
+                        <!-- Outstretched cyber fingertips pointing at user -->
+                        <line x1="264" y1="182" x2="282" y2="178" stroke="#00d1ff" stroke-width="3" stroke-linecap="round" filter="url(#intenseBreachGlow)"/>
+                        <line x1="266" y1="187" x2="288" y2="186" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" filter="url(#intenseBreachGlow)"/>
+                        <line x1="264" y1="192" x2="284" y2="195" stroke="#00d1ff" stroke-width="3" stroke-linecap="round" filter="url(#intenseBreachGlow)"/>
+                        <line x1="260" y1="196" x2="274" y2="202" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- Holographic Data Sparks projecting from fingertips -->
+                        <circle cx="292" cy="186" r="2.5" fill="#ffffff" filter="url(#intenseBreachGlow)"/>
+                        <circle cx="286" cy="174" r="1.5" fill="#00d1ff"/>
+                        <circle cx="288" cy="200" r="2" fill="#38bdf8"/>
+                      </g>
+                    </g>
+
+                    <!-- ========================================================
+                         FRONT STRIDING LEG: STEPS RIGHT OVER THE SCREEN BEZEL!
+                         Breaks completely out of the screen boundary into the user space
+                         ======================================================== -->
+                    <g class="limb-leg-front">
+                      <!-- Thigh stepping forward -->
+                      <path d="M165 215 L190 275" stroke="#1e40af" stroke-width="18" stroke-linecap="round"/>
+                      <!-- Knee Armor Plate -->
+                      <circle cx="190" cy="275" r="11" fill="#081836" stroke="#00d1ff" stroke-width="2.5" filter="url(#neonGlowCyan)"/>
+                      <!-- Lower Leg & Shin Guard Striding OVER the Screen Frame -->
+                      <path d="M190 275 L215 352" stroke="#2563eb" stroke-width="19" stroke-linecap="round"/>
+                      <line x1="192" y1="285" x2="212" y2="345" stroke="#00d1ff" stroke-width="3" filter="url(#neonGlowCyan)"/>
+                      <!-- Massive Cyber Boot stepping OUT into the viewport! -->
+                      <g class="stepping-boot">
+                        <polygon points="196,346 226,340 248,368 190,372" fill="#0a1936" stroke="#00d1ff" stroke-width="2.5"/>
+                        <!-- Glowing Neon Sole Landing Contact Strip -->
+                        <path d="M188 372 L254 368 L256 376 L186 380 Z" fill="#00d1ff" filter="url(#intenseBreachGlow)"/>
+                        <line x1="190" y1="375" x2="252" y2="371" stroke="#ffffff" stroke-width="2"/>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+
+                <!-- Anamorphic Light Rays & 4D Flare Breaking Past Screen -->
+                <div class="anamorphic-flare-hologram"></div>
+                <div class="anamorphic-depth-particles">
+                  <span class="particle p1"></span>
+                  <span class="particle p2"></span>
+                  <span class="particle p3"></span>
+                  <span class="particle p4"></span>
+                  <span class="particle p5"></span>
+                </div>
+              </div>
+
+              <!-- Anamorphic Refraction Ring at Screen Boundary -->
+              <div class="screen-breach-portal"></div>
+            </div>
+
+            <!-- Footer HUD & Controls -->
+            <div class="spatial-hud-footer">
+              <div class="hud-status-group">
+                <span class="hud-icon">◈</span>
+                <span class="hud-label">4D ANAMORPHIC ILLUSION</span>
+                <span class="hud-badge-active">ACTIVE • 60 FPS</span>
+              </div>
+              <div class="hud-interaction-hint">
+                <span class="hint-mouse">MOVE CURSOR TO TILT 3D PERSPECTIVE</span>
               </div>
             </div>
           </div>
@@ -1006,7 +1193,7 @@
             <a href="#contact" class="btn btn-primary" id="ctaBannerPrimaryBtn">
               Discuss Your Project
             </a>
-            <a href="mailto:raheel@moonstack.tech" class="btn btn-secondary" id="ctaBannerEmailBtn">
+            <a href="mailto:raheel@moonastack.com" class="btn btn-secondary" id="ctaBannerEmailBtn">
               Email Our Solutions Team
             </a>
           </div>
@@ -1033,7 +1220,7 @@
               </div>
               <div class="method-content">
                 <h4>Inquiries &amp; RFP</h4>
-                <span>raheel@moonstack.tech</span>
+                <span><a href="mailto:raheel@moonastack.com" style="color: inherit; text-decoration: none;">raheel@moonastack.com</a></span>
               </div>
             </div>
 
@@ -1046,23 +1233,6 @@
                 <span>Global Remote Engineering</span>
               </div>
             </div>
-          </div>
-
-          <!-- Google Sheets Live Integration Status Pill -->
-          <div class="sheets-integration-badge">
-            <div class="sheets-badge-text">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="16" y1="13" x2="8" y2="13"/>
-                <line x1="16" y1="17" x2="8" y2="17"/>
-                <polyline points="10 9 9 9 8 9"/>
-              </svg>
-              <span>Lead Dispatch: Google Sheets Endpoint</span>
-            </div>
-            <button type="button" class="sheets-badge-btn" id="openSheetsGuideBtn">
-              Setup Guide
-            </button>
           </div>
         </div>
 
@@ -1176,7 +1346,7 @@
         <div class="footer-col">
           <h4>Direct Contact</h4>
           <ul class="footer-links">
-            <li><span style="color: var(--text-secondary);">Email: raheel@moonstack.tech</span></li>
+            <li><span style="color: var(--text-secondary);">Email: <a href="mailto:raheel@moonastack.com" style="color: inherit; text-decoration: none;">raheel@moonastack.com</a></span></li>
             <li><span style="color: var(--text-secondary);">Hours: Mon - Fri (Global Remote)</span></li>
             <li><a href="#contact" style="color: var(--accent-cyan);">Request a Consultation &rarr;</a></li>
           </ul>
@@ -1204,133 +1374,6 @@
     <div class="modal-dialog">
       <button class="modal-close-btn" id="closeModalBtn" aria-label="Close dialog">&times;</button>
       <div id="modalDetails"></div>
-    </div>
-  </div>
-
-  <!-- ==========================================================================
-       Google Apps Script Setup Guide Modal
-       ========================================================================== -->
-  <div class="modal-backdrop" id="sheetsGuideModal" role="dialog" aria-modal="true">
-    <div class="modal-dialog">
-      <button class="modal-close-btn" id="closeGuideModalBtn" aria-label="Close dialog">&times;</button>
-      
-      <span class="badge-tag">Backend Integration Guide</span>
-      <h3 style="font-size: 1.5rem; margin-bottom: 12px; color: var(--text-highlight);">
-        Google Drive &amp; Sheets "Site Contact" Lead Dispatch
-      </h3>
-      <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 18px;">
-        Deployable directly to <strong>GitHub Pages</strong>. This self-healing script executes in your Google Account: it automatically verifies if the Google Drive folder exists (creates it if missing), checks if the <strong>Site Contact</strong> spreadsheet exists (creates and formats it if missing), and records inquiries.
-      </p>
-
-      <ol style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-left: 20px; margin-bottom: 20px;">
-        <li style="margin-bottom: 8px;">Go to <a href="https://script.google.com" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan); text-decoration: underline;">script.google.com</a> and click <strong>New project</strong>.</li>
-        <li style="margin-bottom: 8px;">Paste the self-provisioning code below into the editor.</li>
-        <li style="margin-bottom: 8px;">Click <strong>Deploy &gt; New deployment</strong>, select <strong>Web app</strong>.</li>
-        <li style="margin-bottom: 8px;">Set Execute as: <strong>Me (codgramming.raheel@gmail.com)</strong> and Who has access: <strong>Anyone</strong>.</li>
-        <li style="margin-bottom: 8px;">Authorize permissions when prompted and copy the generated <strong>Web App URL</strong>.</li>
-        <li style="margin-bottom: 8px;">Paste the URL into <code>js/script.js</code> under <code>GOOGLE_APPS_SCRIPT_URL</code>. Deploy to GitHub Pages!</li>
-      </ol>
-
-      <div class="code-block-container">
-        <button class="copy-btn" id="copyScriptBtn">Copy Code</button>
-        <pre id="appsScriptCode">function doPost(e) {
-  var lock = LockService.getScriptLock();
-  lock.tryLock(10000);
-  try {
-    var data = {};
-    if (e &amp;&amp; e.postData &amp;&amp; e.postData.contents) {
-      data = JSON.parse(e.postData.contents);
-    } else if (e &amp;&amp; e.parameter) {
-      data = e.parameter;
-    }
-
-    var folderName = "MoonaStack Contacts";
-    var spreadsheetName = "Site Contact";
-
-    // 1. Check if folder exists in Google Drive; create if missing
-    var folders = DriveApp.getFoldersByName(folderName);
-    var folder;
-    if (folders.hasNext()) {
-      folder = folders.next();
-    } else {
-      folder = DriveApp.createFolder(folderName);
-    }
-
-    // 2. Check if 'Site Contact' spreadsheet exists inside folder; create if missing
-    var files = folder.getFilesByName(spreadsheetName);
-    var ss;
-    if (files.hasNext()) {
-      var file = files.next();
-      ss = SpreadsheetApp.open(file);
-    } else {
-      ss = SpreadsheetApp.create(spreadsheetName);
-      var newFile = DriveApp.getFileById(ss.getId());
-      folder.addFile(newFile);
-      DriveApp.getRootFolder().removeFile(newFile);
-
-      var defaultSheet = ss.getSheets()[0];
-      defaultSheet.setName("Site Contact");
-      defaultSheet.appendRow([
-        "Timestamp",
-        "Name",
-        "Email",
-        "Company",
-        "Phone",
-        "Service",
-        "Message"
-      ]);
-      defaultSheet.getRange("A1:G1").setFontWeight("bold").setBackground("#081229").setFontColor("#00d1ff");
-    }
-
-    // 3. Select the 'Site Contact' sheet
-    var sheet = ss.getSheetByName("Site Contact") || ss.getSheets()[0];
-
-    // Ensure header row exists
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        "Timestamp",
-        "Name",
-        "Email",
-        "Company",
-        "Phone",
-        "Service",
-        "Message"
-      ]);
-      sheet.getRange("A1:G1").setFontWeight("bold").setBackground("#081229").setFontColor("#00d1ff");
-    }
-
-    // 4. Append lead entry
-    sheet.appendRow([
-      data.formattedDate || new Date().toLocaleString(),
-      data.name || "",
-      data.email || "",
-      data.company || "",
-      data.phone || "",
-      data.service || "",
-      data.message || ""
-    ]);
-
-    return ContentService.createTextOutput(JSON.stringify({
-      status: "success",
-      message: "Lead recorded in Site Contact sheet under " + folderName
-    })).setMimeType(ContentService.MimeType.JSON);
-
-  } catch (error) {
-    return ContentService.createTextOutput(JSON.stringify({
-      status: "error",
-      message: error.toString()
-    })).setMimeType(ContentService.MimeType.JSON);
-  } finally {
-    lock.releaseLock();
-  }
-}</pre>
-      </div>
-
-      <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
-        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('sheetsGuideModal').classList.remove('active'); document.body.style.overflow='';">
-          Close Guide
-        </button>
-      </div>
     </div>
   </div>
 

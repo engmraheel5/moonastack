@@ -281,12 +281,18 @@ function initMoonaStackApp() {
     };
 
     window.addEventListener('resize', resize);
-    canvas.addEventListener('mousemove', (e) => {
+    
+    // Connect mouse tracking across the entire 4D stage
+    const spatialCard = document.getElementById('spatial4DCard');
+    const targetElement = spatialCard || canvas;
+
+    targetElement.addEventListener('mousemove', (e) => {
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
     });
-    canvas.addEventListener('mouseleave', () => {
+
+    targetElement.addEventListener('mouseleave', () => {
       mouse.x = -1000;
       mouse.y = -1000;
     });
@@ -295,6 +301,123 @@ function initMoonaStackApp() {
     animate();
   };
   initHeroCanvas();
+
+  /* ==========================================================================
+     4B. 4D Spatial Anamorphic Stage: MoonaStack Walking Out of Screen Controller
+     ========================================================================== */
+  const init4DSpatialStage = () => {
+    const card = document.getElementById('spatial4DCard');
+    const walker = document.getElementById('moonaWalker');
+    const depthMeter = document.getElementById('spatialDepthMeter');
+    const depthVal = document.getElementById('depthValue');
+    const breachBtn = document.getElementById('spatialBreachBtn');
+
+    if (!card || !walker) return;
+
+    let isSurging = false;
+    let surgeTimeout = null;
+
+    // 3D Parallax & Depth Tracking on Mouse Move
+    const handleMove = (clientX, clientY) => {
+      if (isSurging) return;
+
+      const rect = card.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Card 3D tilt
+      const rotateX = ((y - centerY) / centerY) * -6;
+      const rotateY = ((x - centerX) / centerX) * 7;
+
+      card.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+
+      // Walker pops forward in stereoscopic 3D
+      const parallaxX = ((x - centerX) / centerX) * -12;
+      const zOffset = 90 + Math.abs(rotateX * 4) + Math.abs(rotateY * 4);
+
+      walker.style.transform = `translateX(calc(-50% + ${parallaxX.toFixed(1)}px)) translateZ(${zOffset.toFixed(0)}px)`;
+
+      // Dynamic Depth Readout in HUD
+      if (depthVal) {
+        depthVal.textContent = `+${Math.round(zOffset * 1.8)}mm`;
+      }
+    };
+
+    card.addEventListener('mousemove', (e) => {
+      handleMove(e.clientX, e.clientY);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (isSurging) return;
+      card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+      walker.style.transform = 'translateX(-50%) translateZ(90px)';
+      if (depthVal) {
+        depthVal.textContent = '+160mm';
+      }
+    });
+
+    // Touch support for mobile devices
+    card.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        handleMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    card.addEventListener('touchend', () => {
+      if (isSurging) return;
+      card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+      walker.style.transform = 'translateX(-50%) translateZ(90px)';
+      if (depthVal) {
+        depthVal.textContent = '+160mm';
+      }
+    });
+
+    // "⚡ Step Closer" Interactive 4D Surge
+    if (breachBtn) {
+      breachBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isSurging) return;
+
+        isSurging = true;
+        card.classList.add('breach-surge');
+        breachBtn.textContent = '🚀 BREACH ACTIVE!';
+        breachBtn.style.background = 'rgba(0, 209, 255, 0.4)';
+        breachBtn.style.borderColor = '#ffffff';
+
+        if (depthVal) {
+          depthVal.textContent = '+280mm [MAX DEPTH]';
+          depthVal.style.color = '#ffffff';
+        }
+
+        // Spawn extra shockwave burst
+        const stage = document.getElementById('spatialScreenStage');
+        if (stage) {
+          const burst = document.createElement('div');
+          burst.className = 'step-shockwave ring-2';
+          burst.style.cssText = 'bottom: 22px; left: 68%; border-color: #ffffff; width: 140px; height: 80px;';
+          stage.appendChild(burst);
+          setTimeout(() => burst.remove(), 2000);
+        }
+
+        if (surgeTimeout) clearTimeout(surgeTimeout);
+        surgeTimeout = setTimeout(() => {
+          card.classList.remove('breach-surge');
+          isSurging = false;
+          breachBtn.textContent = '⚡ Step Closer';
+          breachBtn.style.background = '';
+          breachBtn.style.borderColor = '';
+          walker.style.transform = 'translateX(-50%) translateZ(90px)';
+          if (depthVal) {
+            depthVal.textContent = '+160mm';
+            depthVal.style.color = '';
+          }
+        }, 3200);
+      });
+    }
+  };
+  init4DSpatialStage();
 
   /* ==========================================================================
      5. Interactive 3D Card Hover Effect (Desktop)
@@ -818,7 +941,7 @@ function initMoonaStackApp() {
       } catch (err) {
         console.error('Submission error:', err);
         formStatus.innerHTML = `
-          <strong>Submission Error:</strong> Unable to dispatch inquiry. Please email us directly at <a href="mailto:raheel@moonstack.tech" style="color: var(--accent-cyan); text-decoration: underline;">raheel@moonstack.tech</a>.
+          <strong>Submission Error:</strong> Unable to dispatch inquiry. Please email us directly at <a href="mailto:raheel@moonastack.com" style="color: var(--accent-cyan); text-decoration: underline;">raheel@moonastack.com</a>.
         `;
         formStatus.className = 'form-feedback';
         formStatus.style.display = 'block';

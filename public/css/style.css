@@ -573,64 +573,567 @@ p {
   margin-top: 4px;
 }
 
-/* Hero Interactive Architecture Visual */
-.hero-visual-card {
+/* ==========================================================================
+   4D Anamorphic Spatial Stage: MoonaStack Walking Out of Screen
+   ========================================================================== */
+.hero-visual {
+  perspective: 1200px;
+  overflow: visible;
+}
+
+.spatial-4d-card {
   position: relative;
   background: var(--grad-card);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 209, 255, 0.1);
-  backdrop-filter: blur(12px);
-  overflow: hidden;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  padding: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(0, 209, 255, 0.16);
+  backdrop-filter: blur(14px);
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  overflow: visible;
 }
 
-.canvas-container {
+.spatial-hud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 209, 255, 0.22);
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.spatial-hud-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.pulse-red {
+  background: #f43f5e !important;
+  box-shadow: 0 0 8px #f43f5e;
+  animation: badgeBlink 1.4s infinite;
+}
+
+@keyframes badgeBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.spatial-depth-meter {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.spatial-depth-meter .depth-val {
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.spatial-depth-meter .depth-status {
+  color: #38bdf8;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+}
+
+.spatial-action-btn {
+  background: rgba(0, 209, 255, 0.12);
+  border: 1px solid rgba(0, 209, 255, 0.45);
+  color: #ffffff;
+  padding: 4px 11px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 10px rgba(0, 209, 255, 0.2);
+}
+
+.spatial-action-btn:hover {
+  background: rgba(0, 209, 255, 0.28);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 16px rgba(0, 209, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+/* The Anamorphic Screen Stage with 3D Depth & Intentional Breakout */
+.spatial-screen-stage {
   position: relative;
   width: 100%;
-  height: 360px;
+  height: 380px;
   border-radius: var(--radius-md);
-  background: radial-gradient(circle at center, rgba(14, 28, 62, 0.75) 0%, rgba(4, 9, 22, 0.95) 100%);
-  border: 1px solid var(--border-subtle);
+  transform-style: preserve-3d;
+  overflow: visible !important;
+}
+
+/* Corner HUD Optical Brackets */
+.screen-bracket {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(0, 209, 255, 0.8);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.screen-bracket.top-left {
+  top: 6px;
+  left: 6px;
+  border-width: 2px 0 0 2px;
+}
+
+.screen-bracket.top-right {
+  top: 6px;
+  right: 6px;
+  border-width: 2px 2px 0 0;
+}
+
+.screen-bracket.bottom-left {
+  bottom: 6px;
+  left: 6px;
+  border-width: 0 0 2px 2px;
+}
+
+.screen-bracket.bottom-right {
+  bottom: 6px;
+  right: 6px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Receding 3D Cyberspace Tunnel Chamber (Inside the Screen) */
+.spatial-tunnel-chamber {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  background: radial-gradient(circle at 50% 25%, rgba(15, 32, 72, 0.95) 0%, rgba(3, 7, 18, 0.98) 100%);
+  border: 1px solid rgba(0, 209, 255, 0.28);
   overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 209, 255, 0.15);
+}
+
+.tunnel-grid-floor {
+  position: absolute;
+  bottom: -40px;
+  left: -25%;
+  right: -25%;
+  height: 250px;
+  transform: perspective(400px) rotateX(70deg);
+  transform-origin: bottom center;
+  background-image: 
+    linear-gradient(to right, rgba(0, 209, 255, 0.4) 1px, transparent 1px),
+    linear-gradient(to top, rgba(0, 209, 255, 0.4) 1px, transparent 1px);
+  background-size: 32px 32px;
+  animation: gridFloorScroll 2.4s linear infinite;
+  mask-image: linear-gradient(to top, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
+}
+
+@keyframes gridFloorScroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 32px; }
+}
+
+.tunnel-portal-core {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 209, 255, 0.45) 0%, rgba(99, 102, 241, 0.2) 50%, transparent 75%);
+  filter: blur(8px);
+  animation: corePulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes corePulse {
+  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
 }
 
 #architectureCanvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   display: block;
   touch-action: none;
+  opacity: 0.75;
 }
 
-.visual-overlay-info {
+/* Holographic Screen Boundary & Glass Bezel Threshold */
+.screen-glass-barrier {
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-  right: 12px;
-  background: rgba(8, 15, 33, 0.9);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.glass-scan-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #00d1ff 50%, transparent 100%);
+  opacity: 0.8;
+  animation: glassScan 3s ease-in-out infinite;
+}
+
+@keyframes glassScan {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.7); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+.screen-bezel-bottom {
+  height: 16px;
+  background: linear-gradient(90deg, #050e1f 0%, #0d2146 50%, #050e1f 100%);
+  border-top: 2px solid #00d1ff;
+  box-shadow: 0 0 15px rgba(0, 209, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bezel-mark {
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  color: #00d1ff;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+/* ==========================================================================
+   THE MOONASTACK 4D WALKER: WALKING OUT OF THE SCREEN
+   The entity steps over the screen border directly into the user's viewport
+   ========================================================================== */
+.moonastack-4d-walker {
+  position: absolute;
+  bottom: -36px; /* Protrudes over the bottom screen frame! */
+  left: 50%;
+  width: 320px;
+  height: 400px;
+  transform: translateX(-50%) translateZ(90px);
+  transform-style: preserve-3d;
+  z-index: 25; /* Sits in front of and outside the screen box! */
+  pointer-events: none;
+  filter: drop-shadow(0 20px 30px rgba(0, 209, 255, 0.4));
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.walker-figure-wrap {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: walkerGait 2.2s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+
+@keyframes walkerGait {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-9px) rotate(1.2deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(-1.2deg);
+  }
+}
+
+.walker-character-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible !important;
+}
+
+/* Walker Biomechanic Limbs Animation */
+.limb-leg-front {
+  transform-origin: 165px 215px;
+  animation: legStrideFront 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes legStrideFront {
+  0%, 100% {
+    transform: rotate(8deg) translate(3px, 2px);
+  }
+  25% {
+    transform: rotate(18deg) translate(8px, -6px);
+  }
+  50% {
+    transform: rotate(-10deg) translate(-5px, 6px);
+  }
+  75% {
+    transform: rotate(-2deg) translate(0px, 0px);
+  }
+}
+
+.stepping-boot {
+  filter: drop-shadow(0 0 12px #00d1ff);
+  animation: bootPlantGlow 2.2s ease-in-out infinite;
+}
+
+@keyframes bootPlantGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 16px #00d1ff) drop-shadow(0 0 6px #ffffff);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px #00d1ff);
+  }
+}
+
+.limb-leg-back {
+  transform-origin: 142px 220px;
+  animation: legStrideBack 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes legStrideBack {
+  0%, 100% {
+    transform: rotate(-12deg) translate(-4px, 4px);
+    opacity: 0.7;
+  }
+  25% {
+    transform: rotate(-4deg) translate(-1px, 1px);
+    opacity: 0.8;
+  }
+  50% {
+    transform: rotate(16deg) translate(6px, -4px);
+    opacity: 0.95;
+  }
+  75% {
+    transform: rotate(4deg) translate(1px, -1px);
+    opacity: 0.75;
+  }
+}
+
+.limb-arm-front {
+  transform-origin: 185px 125px;
+  animation: armReachFront 2.2s ease-in-out infinite;
+}
+
+@keyframes armReachFront {
+  0%, 100% {
+    transform: rotate(-8deg) scale(1.04);
+  }
+  50% {
+    transform: rotate(12deg) scale(0.96);
+  }
+}
+
+.reaching-hand {
+  animation: handSparkPulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes handSparkPulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 6px #00d1ff); }
+  100% { transform: scale(1.08); filter: drop-shadow(0 0 16px #00d1ff) drop-shadow(0 0 8px #ffffff); }
+}
+
+.limb-arm-back {
+  transform-origin: 125px 130px;
+  animation: armReachBack 2.2s ease-in-out infinite;
+}
+
+@keyframes armReachBack {
+  0%, 100% {
+    transform: rotate(14deg);
+  }
+  50% {
+    transform: rotate(-12deg);
+  }
+}
+
+.limb-head {
+  animation: headNod 2.2s ease-in-out infinite;
+}
+
+@keyframes headNod {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(2px) rotate(1deg); }
+}
+
+/* Walker Cast Shadow (Spanning outside screen bezel onto the outer card) */
+.walker-shadow {
+  position: absolute;
+  bottom: 18px;
+  left: 35%;
+  width: 140px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 209, 255, 0.45) 0%, rgba(0, 0, 0, 0.8) 50%, transparent 80%);
+  filter: blur(8px);
+  transform: rotate(-4deg);
+  animation: shadowScale 2.2s ease-in-out infinite;
+}
+
+@keyframes shadowScale {
+  0%, 100% { transform: scale(1.05); opacity: 0.85; }
+  50% { transform: scale(0.85); opacity: 0.55; }
+}
+
+/* Stepping Shockwaves Landing Outside the Screen Threshold */
+.step-shockwave {
+  position: absolute;
+  bottom: 22px;
+  left: 68%;
+  transform: translate(-50%, 50%) rotateX(65deg);
+  border: 2px solid #00d1ff;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.step-shockwave.ring-1 {
+  width: 70px;
+  height: 40px;
+  animation: shockwaveRipple 2.2s cubic-bezier(0.1, 0.8, 0.25, 1) infinite;
+}
+
+.step-shockwave.ring-2 {
+  width: 110px;
+  height: 60px;
+  animation: shockwaveRipple 2.2s cubic-bezier(0.1, 0.8, 0.25, 1) infinite;
+  animation-delay: 0.3s;
+}
+
+@keyframes shockwaveRipple {
+  0% {
+    transform: translate(-50%, 50%) rotateX(65deg) scale(0.2);
+    opacity: 1;
+    border-color: #ffffff;
+    box-shadow: 0 0 15px #00d1ff;
+  }
+  60% {
+    opacity: 0.7;
+    border-color: #00d1ff;
+  }
+  100% {
+    transform: translate(-50%, 50%) rotateX(65deg) scale(1.6);
+    opacity: 0;
+    border-color: #38bdf8;
+  }
+}
+
+.step-ground-reflection {
+  position: absolute;
+  bottom: 14px;
+  left: 68%;
+  width: 80px;
+  height: 20px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(0, 209, 255, 0.6) 0%, transparent 75%);
+  filter: blur(6px);
+  animation: groundGlowPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes groundGlowPulse {
+  0%, 100% { opacity: 0.9; transform: translateX(-50%) scale(1.1); }
+  50% { opacity: 0.3; transform: translateX(-50%) scale(0.8); }
+}
+
+/* Anamorphic Refraction Hologram Particle Breakout */
+.anamorphic-depth-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.anamorphic-depth-particles .particle {
+  position: absolute;
+  border-radius: 50%;
+  background: #00d1ff;
+  box-shadow: 0 0 8px #00d1ff;
+  animation: particleBreakout 3s ease-in-out infinite;
+}
+
+.particle.p1 { width: 5px; height: 5px; top: 40%; left: 75%; animation-delay: 0.2s; }
+.particle.p2 { width: 4px; height: 4px; top: 60%; left: 80%; animation-delay: 0.7s; background: #ffffff; }
+.particle.p3 { width: 6px; height: 6px; top: 75%; left: 62%; animation-delay: 1.2s; }
+.particle.p4 { width: 3px; height: 3px; top: 50%; left: 25%; animation-delay: 1.8s; }
+.particle.p5 { width: 4px; height: 4px; top: 65%; left: 30%; animation-delay: 2.3s; background: #38bdf8; }
+
+@keyframes particleBreakout {
+  0% {
+    transform: translateZ(0) translateY(0);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+    transform: translateZ(60px) translateY(-15px);
+  }
+  100% {
+    transform: translateZ(140px) translateY(-45px);
+    opacity: 0;
+  }
+}
+
+/* Interactive 4D Forward Surge (Breach Mode) */
+.spatial-4d-card.breach-surge .moonastack-4d-walker {
+  transform: translateX(-50%) translateZ(190px) scale(1.15) !important;
+  filter: drop-shadow(0 25px 45px rgba(0, 209, 255, 0.75)) drop-shadow(0 0 20px #ffffff);
+  transition: transform 0.4s cubic-bezier(0.15, 0.85, 0.35, 1.2), filter 0.4s ease;
+}
+
+.spatial-4d-card.breach-surge {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 55px rgba(0, 209, 255, 0.45);
+}
+
+/* Footer HUD & Controls */
+.spatial-hud-footer {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 209, 255, 0.2);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.visual-status {
+.hud-status-group {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.78rem;
-  color: var(--accent-cyan);
-  font-family: var(--font-mono);
 }
 
-.visual-fps {
-  font-size: 0.72rem;
+.hud-icon {
+  color: var(--accent-cyan);
+  font-size: 0.9rem;
+}
+
+.hud-label {
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.hud-badge-active {
+  background: rgba(0, 209, 255, 0.15);
+  color: var(--accent-cyan);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border: 1px solid rgba(0, 209, 255, 0.3);
+}
+
+.hud-interaction-hint {
   color: var(--text-muted);
-  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
 }
 
 /* ==========================================================================
