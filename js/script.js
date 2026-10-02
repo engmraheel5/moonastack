@@ -834,21 +834,235 @@ function initMoonaStackApp() {
   });
 
   /* ==========================================================================
+     8B. Interactive Scope & Engagement Estimator Controller
+     ========================================================================== */
+  const estimatorData = {
+    tech: [
+      {
+        id: 'fastapi',
+        serviceKey: 'api',
+        title: 'FastAPI Microservice & Async Worker Sprint',
+        subtitle: 'Sub-50ms REST/GraphQL endpoints, Celery workers & Pydantic V2',
+        timeline: '⏱ Estimated Delivery: 2–3 Weeks',
+        kicker: 'TECH TRACK ENGAGEMENT',
+        draft: 'Hi Raheel, I am an engineering leader looking for assistance with our FastAPI microservices and async backend architecture. Key requirements include: ',
+        deliverables: [
+          'Asynchronous REST endpoints (FastAPI + Pydantic V2)',
+          'Celery / Redis background queue workers',
+          'Automated PyTest integration test suite (>90% coverage)',
+          'Docker Compose & GitHub Actions deployment pipeline'
+        ]
+      },
+      {
+        id: 'ai-agents',
+        serviceKey: 'ai',
+        title: 'Autonomous AI Agents & Enterprise RAG Pipeline',
+        subtitle: 'Production LLM pipelines, VectorStores & multi-tool workflows',
+        timeline: '⏱ Estimated Delivery: 3–4 Weeks',
+        kicker: 'TECH TRACK ENGAGEMENT',
+        draft: 'Hi Raheel, we want to integrate autonomous AI agent workflows and zero-hallucination RAG with our proprietary data. Key requirements include: ',
+        deliverables: [
+          'VectorStore embeddings (pgvector / Chroma / Pinecone)',
+          'Multi-tool agent routing with verifiable guardrails',
+          'Jira, Slack, & internal documentation connectors',
+          'Automated evaluation benchmark & token optimization'
+        ]
+      },
+      {
+        id: 'audit',
+        serviceKey: 'audit',
+        title: '5-Day Technical Code & Architecture Audit',
+        subtitle: 'Comprehensive repo diagnostic, query profiling & ready-to-merge PRs',
+        timeline: '⏱ Estimated Delivery: 5 Business Days',
+        kicker: 'TECH TRACK ENGAGEMENT',
+        draft: 'Hi Raheel, we would like a 5-Day Technical Architecture Audit for our repository to pinpoint performance bottlenecks and security issues. Our stack is: ',
+        deliverables: [
+          'Comprehensive repository review & bottleneck report',
+          'PostgreSQL slow query profiling (EXPLAIN ANALYZE)',
+          'API latency benchmarks & concurrency stress tests',
+          'Prioritized remediation roadmap with ready-to-merge PRs'
+        ]
+      },
+      {
+        id: 'retainer',
+        serviceKey: 'retainer',
+        title: 'Dedicated Senior Principal Retainer (Weekly/Monthly)',
+        subtitle: '20–40 hrs/week senior bandwidth embedded in your sprints',
+        timeline: '⏱ Dedicated Sprint Bandwidth: 20–40 hrs/wk',
+        kicker: 'TECH TRACK ENGAGEMENT',
+        draft: 'Hi Raheel, our team needs dedicated senior engineering capacity embedded into our sprint backlog. We need help with: ',
+        deliverables: [
+          'Direct Slack/Discord channel access & daily standups',
+          'Surgical backend feature implementation & PR reviews',
+          'Architectural decision records (ADRs) & documentation',
+          'Weekly sprint velocity with zero middle management'
+        ]
+      }
+    ],
+    biz: [
+      {
+        id: 'portal',
+        serviceKey: 'web',
+        title: 'Automated Client & Dispatch Portal (Save 15h/week)',
+        subtitle: 'Self-service client booking, intake, status tracking & Stripe',
+        timeline: '⏱ Turnkey Delivery: 3–4 Weeks · Flat Fee',
+        kicker: 'PRODUCTIZED BUSINESS SYSTEM',
+        draft: 'Hi Raheel, our business wants to build an automated client portal to eliminate manual receptionist/dispatching work. Our current process is: ',
+        deliverables: [
+          'Self-service customer intake & booking flow',
+          'Role-based staff dashboard with live job statuses',
+          'Instant SMS & email confirmation triggers',
+          'Stripe payment processing & QuickBooks sync'
+        ]
+      },
+      {
+        id: 'funnel',
+        serviceKey: 'web',
+        title: 'Speed-Optimized Digital Platform & Lead Engine',
+        subtitle: 'Ultra-fast conversion platform turning ad clicks into booked leads',
+        timeline: '⏱ Turnkey Delivery: 2–3 Weeks · Flat Fee',
+        kicker: 'PRODUCTIZED BUSINESS SYSTEM',
+        draft: 'Hi Raheel, we are running ad campaigns and need a blazing-fast, high-converting digital platform that captures leads. Details: ',
+        deliverables: [
+          'Sub-second mobile loading speed (< 0.8s LCP)',
+          'High-conversion lead capture & qualification funnel',
+          'Automated Google Sheets & CRM lead notifications',
+          'Complete analytics tracking & Google Ads conversion tags'
+        ]
+      },
+      {
+        id: 'workflow',
+        serviceKey: 'other',
+        title: 'Custom Workflow & Systems Automation',
+        subtitle: 'Automate manual handoffs between CRM, billing & spreadsheets',
+        timeline: '⏱ Turnkey Delivery: 2–3 Weeks · Flat Fee',
+        kicker: 'PRODUCTIZED BUSINESS SYSTEM',
+        draft: 'Hi Raheel, we have disconnected software tools and want to automate our internal business operations. Details: ',
+        deliverables: [
+          'Seamless automated sync between email, CRM, and billing',
+          'Elimination of manual spreadsheet data entry',
+          'Webhook handlers & failure notification alerts',
+          'Staff training video & 30-day post-launch warranty'
+        ]
+      }
+    ]
+  };
+
+  let activeEstimatorTrack = 'tech';
+  let activeEstimatorScope = estimatorData.tech[0];
+
+  const tabTechBuyer = document.getElementById('tabTechBuyer');
+  const tabBizBuyer = document.getElementById('tabBizBuyer');
+  const scopeOptionsContainer = document.getElementById('scopeOptionsContainer');
+  const previewKicker = document.getElementById('previewKicker');
+  const previewTitle = document.getElementById('previewTitle');
+  const previewTimeline = document.getElementById('previewTimeline');
+  const previewDeliverables = document.getElementById('previewDeliverables');
+  const estimatorApplyBtn = document.getElementById('estimatorApplyBtn');
+
+  const renderEstimator = () => {
+    if (!scopeOptionsContainer) return;
+    const items = estimatorData[activeEstimatorTrack] || [];
+    if (!items.includes(activeEstimatorScope)) {
+      activeEstimatorScope = items[0];
+    }
+
+    scopeOptionsContainer.innerHTML = items.map(item => `
+      <div class="scope-option-btn ${item.id === activeEstimatorScope.id ? 'active' : ''}" data-scope-id="${item.id}">
+        <div class="scope-btn-text">
+          <h5>${item.title}</h5>
+          <p>${item.subtitle}</p>
+        </div>
+        <div class="radio-indicator"></div>
+      </div>
+    `).join('');
+
+    // Bind option click
+    scopeOptionsContainer.querySelectorAll('.scope-option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-scope-id');
+        const match = items.find(i => i.id === id);
+        if (match) {
+          activeEstimatorScope = match;
+          renderEstimator();
+        }
+      });
+    });
+
+    // Update live preview card
+    if (previewKicker) previewKicker.textContent = activeEstimatorScope.kicker;
+    if (previewTitle) previewTitle.textContent = activeEstimatorScope.title;
+    if (previewTimeline) previewTimeline.innerHTML = `<span>${activeEstimatorScope.timeline}</span>`;
+    if (previewDeliverables) {
+      previewDeliverables.innerHTML = activeEstimatorScope.deliverables.map(d => `
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>${d}</span>
+        </li>
+      `).join('');
+    }
+  };
+
+  tabTechBuyer?.addEventListener('click', () => {
+    activeEstimatorTrack = 'tech';
+    tabTechBuyer.classList.add('active');
+    tabBizBuyer?.classList.remove('active');
+    activeEstimatorScope = estimatorData.tech[0];
+    renderEstimator();
+  });
+
+  tabBizBuyer?.addEventListener('click', () => {
+    activeEstimatorTrack = 'biz';
+    tabBizBuyer.classList.add('active');
+    tabTechBuyer?.classList.remove('active');
+    activeEstimatorScope = estimatorData.biz[0];
+    renderEstimator();
+  });
+
+  estimatorApplyBtn?.addEventListener('click', () => {
+    if (activeEstimatorScope) {
+      window.preselectBoutiqueService(activeEstimatorScope.serviceKey, activeEstimatorScope.draft);
+    }
+  });
+
+  // Initial render of scope estimator
+  renderEstimator();
+
+  /* ==========================================================================
      9. Services Links to Pre-fill Contact Form
      ========================================================================== */
+  window.preselectBoutiqueService = (serviceKey, customDraft) => {
+    const serviceSelect = document.getElementById('service');
+    const messageInput = document.getElementById('message');
+    const nameInput = document.getElementById('name');
+    const contactSection = document.getElementById('contact');
+
+    if (serviceSelect && serviceKey) {
+      serviceSelect.value = serviceKey;
+    }
+
+    if (messageInput && customDraft) {
+      messageInput.value = customDraft;
+    }
+
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        if (nameInput && !nameInput.value) {
+          nameInput.focus();
+        } else if (messageInput) {
+          messageInput.focus();
+        }
+      }, 500);
+    }
+  };
+
   const serviceButtons = document.querySelectorAll('.service-link');
-  const serviceSelect = document.getElementById('service');
   serviceButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const sVal = btn.getAttribute('data-service');
-      if (serviceSelect && sVal) {
-        serviceSelect.value = sVal;
-      }
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
+      window.preselectBoutiqueService(sVal);
     });
   });
 

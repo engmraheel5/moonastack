@@ -1,6 +1,6 @@
 {
   "name": "MoonaStack",
-  "description": "MoonaStack is an enterprise IT services and technology solutions company specializing in scalable web applications, AI automation, and high-performance data systems.",
+  "description": "MoonaStack is an independent boutique software studio and specialized engineering consultancy delivering high-performance FastAPI backends, AI agent workflows, and productized automated business systems.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
