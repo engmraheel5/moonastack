@@ -1,6 +1,6 @@
 {
   "name": "MoonaStack",
-  "description": "MoonaStack is an independent boutique software studio and specialized engineering consultancy delivering high-performance FastAPI backends, AI agent workflows, and productized automated business systems.",
+  "description": "MoonaStack: Intelligent Workflow Automation for Teams. Connect your internal docs, Slack, and project boards with autonomous AI agents to automate operational tasks.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
