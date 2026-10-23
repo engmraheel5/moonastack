@@ -1,14 +1,12 @@
 /**
- * MoonaStack - High-Performance IT Solutions & Technology Engineering
- * Mobile-First Controller, Rich Animation Engine & Case Study Modals
+ * MoonaStack - Boutique Software Studio & Specialized Engineering Consultancy
+ * Professional, clean script controller: Navigation, Estimator, Case Study Modal, and Form Handling
  */
 
 document.documentElement.classList.add('js-enabled');
 
 function initMoonaStackApp() {
   // Google Apps Script Web App Endpoint for Form Submissions
-  // Automatically logs inquiries into your Google Drive under "MoonaStack Contacts/Site Contact" sheet.
-  // Follow the setup guide in the modal or README to deploy your Web App.
   const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyieGaNcB5GBoRK-uIUqk_chiuLnSM0opHfPcSmYf1oFIFxUQFzyXdlml3wa7DUFphf9g/exec';
 
   /* ==========================================================================
@@ -51,7 +49,7 @@ function initMoonaStackApp() {
     });
   }
 
-  // Header blur and shadow on scroll
+  // Header shadow on scroll
   const handleScrollHeader = () => {
     if (window.scrollY > 20) {
       siteHeader?.classList.add('scrolled');
@@ -119,7 +117,6 @@ function initMoonaStackApp() {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
 
-          // Trigger stat counter when metrics container appears
           if (entry.target.classList.contains('hero-badges') && !statsCounted) {
             statsCounted = true;
             runCounterAnimation();
@@ -141,7 +138,7 @@ function initMoonaStackApp() {
     revealElements.forEach(el => el.classList.add('active'));
   }
 
-  // Safety failsafe: ensure all content becomes visible in case of iframe observer restrictions
+  // Safety fallback
   setTimeout(() => {
     revealElements.forEach(el => el.classList.add('active'));
     if (!statsCounted) {
@@ -151,300 +148,7 @@ function initMoonaStackApp() {
   }, 650);
 
   /* ==========================================================================
-     4. Interactive Hero Constellation Canvas (Performance & Mobile Optimized)
-     ========================================================================== */
-  const initHeroCanvas = () => {
-    const canvas = document.getElementById('architectureCanvas');
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let width = 0;
-    let height = 0;
-    let particles = [];
-    let animationFrameId = null;
-    let mouse = { x: -1000, y: -1000, radius: 110 };
-
-    const resize = () => {
-      const rect = canvas.parentElement?.getBoundingClientRect();
-      width = canvas.width = rect ? rect.width : 400;
-      height = canvas.height = rect ? rect.height : 320;
-      createParticles();
-    };
-
-    const isMobile = window.innerWidth <= 768;
-    const particleCount = isMobile ? 32 : 55;
-    const maxConnectionDistance = isMobile ? 75 : 95;
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.75;
-        this.vy = (Math.random() - 0.5) * 0.75;
-        this.radius = Math.random() * 2 + 1.2;
-        this.baseRadius = this.radius;
-        this.alpha = Math.random() * 0.6 + 0.3;
-        this.color = Math.random() > 0.3 ? '#00d1ff' : '#60a5fa';
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-
-        // Mouse proximity repulsion/glow
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < mouse.radius) {
-          const force = (1 - dist / mouse.radius);
-          this.x -= (dx / dist) * force * 3;
-          this.y -= (dy / dist) * force * 3;
-          this.radius = this.baseRadius * 1.6;
-        } else {
-          this.radius = this.baseRadius;
-        }
-      }
-
-      draw() {
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.shadowColor = '#00d1ff';
-        ctx.shadowBlur = 6;
-        ctx.globalAlpha = this.alpha;
-        ctx.fill();
-        ctx.restore();
-      }
-    }
-
-    const createParticles = () => {
-      particles = [];
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-      }
-    };
-
-    const drawConnections = () => {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < maxConnectionDistance) {
-            const alpha = (1 - dist / maxConnectionDistance) * 0.28;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 209, 255, ${alpha})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      }
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      // Subtle background grid
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
-      ctx.lineWidth = 1;
-      const gridSize = 40;
-      for (let x = 0; x < width; x += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.stroke();
-      }
-      for (let y = 0; y < height; y += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
-      }
-
-      drawConnections();
-
-      for (let p of particles) {
-        p.update();
-        p.draw();
-      }
-
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    window.addEventListener('resize', resize);
-    
-    // Connect mouse tracking across the entire 4D stage
-    const spatialCard = document.getElementById('spatial4DCard');
-    const targetElement = spatialCard || canvas;
-
-    targetElement.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    });
-
-    targetElement.addEventListener('mouseleave', () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    });
-
-    resize();
-    animate();
-  };
-  initHeroCanvas();
-
-  /* ==========================================================================
-     4B. 4D Spatial Anamorphic Stage: MoonaStack Walking Out of Screen Controller
-     ========================================================================== */
-  const init4DSpatialStage = () => {
-    const card = document.getElementById('spatial4DCard');
-    const walker = document.getElementById('moonaWalker');
-    const depthMeter = document.getElementById('spatialDepthMeter');
-    const depthVal = document.getElementById('depthValue');
-    const breachBtn = document.getElementById('spatialBreachBtn');
-
-    if (!card || !walker) return;
-
-    let isSurging = false;
-    let surgeTimeout = null;
-
-    // 3D Parallax & Depth Tracking on Mouse Move
-    const handleMove = (clientX, clientY) => {
-      if (isSurging) return;
-
-      const rect = card.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      // Card 3D tilt
-      const rotateX = ((y - centerY) / centerY) * -6;
-      const rotateY = ((x - centerX) / centerX) * 7;
-
-      card.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
-
-      // Walker pops forward in stereoscopic 3D
-      const parallaxX = ((x - centerX) / centerX) * -12;
-      const zOffset = 90 + Math.abs(rotateX * 4) + Math.abs(rotateY * 4);
-
-      walker.style.transform = `translateX(calc(-50% + ${parallaxX.toFixed(1)}px)) translateZ(${zOffset.toFixed(0)}px)`;
-
-      // Dynamic Depth Readout in HUD
-      if (depthVal) {
-        depthVal.textContent = `+${Math.round(zOffset * 1.8)}mm`;
-      }
-    };
-
-    card.addEventListener('mousemove', (e) => {
-      handleMove(e.clientX, e.clientY);
-    });
-
-    card.addEventListener('mouseleave', () => {
-      if (isSurging) return;
-      card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
-      walker.style.transform = 'translateX(-50%) translateZ(90px)';
-      if (depthVal) {
-        depthVal.textContent = '+160mm';
-      }
-    });
-
-    // Touch support for mobile devices
-    card.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches[0]) {
-        handleMove(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    }, { passive: true });
-
-    card.addEventListener('touchend', () => {
-      if (isSurging) return;
-      card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
-      walker.style.transform = 'translateX(-50%) translateZ(90px)';
-      if (depthVal) {
-        depthVal.textContent = '+160mm';
-      }
-    });
-
-    // "⚡ Step Closer" Interactive 4D Surge
-    if (breachBtn) {
-      breachBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (isSurging) return;
-
-        isSurging = true;
-        card.classList.add('breach-surge');
-        breachBtn.textContent = '🚀 BREACH ACTIVE!';
-        breachBtn.style.background = 'rgba(0, 209, 255, 0.4)';
-        breachBtn.style.borderColor = '#ffffff';
-
-        if (depthVal) {
-          depthVal.textContent = '+280mm [MAX DEPTH]';
-          depthVal.style.color = '#ffffff';
-        }
-
-        // Spawn extra shockwave burst
-        const stage = document.getElementById('spatialScreenStage');
-        if (stage) {
-          const burst = document.createElement('div');
-          burst.className = 'step-shockwave ring-2';
-          burst.style.cssText = 'bottom: 22px; left: 68%; border-color: #ffffff; width: 140px; height: 80px;';
-          stage.appendChild(burst);
-          setTimeout(() => burst.remove(), 2000);
-        }
-
-        if (surgeTimeout) clearTimeout(surgeTimeout);
-        surgeTimeout = setTimeout(() => {
-          card.classList.remove('breach-surge');
-          isSurging = false;
-          breachBtn.textContent = '⚡ Step Closer';
-          breachBtn.style.background = '';
-          breachBtn.style.borderColor = '';
-          walker.style.transform = 'translateX(-50%) translateZ(90px)';
-          if (depthVal) {
-            depthVal.textContent = '+160mm';
-            depthVal.style.color = '';
-          }
-        }, 3200);
-      });
-    }
-  };
-  init4DSpatialStage();
-
-  /* ==========================================================================
-     5. Interactive 3D Card Hover Effect (Desktop)
-     ========================================================================== */
-  if (window.matchMedia('(pointer: fine)').matches) {
-    const tiltCards = document.querySelectorAll('.service-card, .work-card');
-    tiltCards.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -5;
-        const rotateY = ((x - centerX) / centerX) * 5;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
-      });
-    });
-  }
-
-  /* ==========================================================================
-     6. Technology Filter Tabs
+     4. Technology Filter Tabs
      ========================================================================== */
   const techTabs = document.querySelectorAll('.tech-tab-btn');
   const techCards = document.querySelectorAll('.tech-card');
@@ -459,7 +163,7 @@ function initMoonaStackApp() {
         const cat = card.getAttribute('data-category');
         if (filter === 'all' || cat === filter) {
           card.style.display = 'flex';
-          card.style.animation = 'fadeIn 0.3s ease forwards';
+          card.style.animation = 'fadeIn 0.25s ease forwards';
         } else {
           card.style.display = 'none';
         }
@@ -468,9 +172,8 @@ function initMoonaStackApp() {
   });
 
   /* ==========================================================================
-     7. Work / Case Studies Data & Interactive Deep-Dive Modal
+     5. Work / Case Studies Data & Clean Modal
      ========================================================================== */
-  // Real enterprise project data derived from the official engineering portfolio documents
   const enterpriseProjects = {
     'alethea': {
       title: 'Alethea AI Platform Engineering',
@@ -652,7 +355,7 @@ function initMoonaStackApp() {
         const cat = card.getAttribute('data-category') || '';
         if (filter === 'all' || cat.includes(filter)) {
           card.style.display = 'flex';
-          card.style.animation = 'fadeIn 0.3s ease forwards';
+          card.style.animation = 'fadeIn 0.25s ease forwards';
         } else {
           card.style.display = 'none';
         }
@@ -670,20 +373,16 @@ function initMoonaStackApp() {
     if (!data || !projectModal || !modalDetails) return;
 
     modalDetails.innerHTML = `
-      <div style="margin-bottom: 8px;">
-        <span class="badge-tag">${data.domain}</span>
-      </div>
-      <h2 style="font-size: 1.6rem; color: var(--text-highlight); margin-bottom: 6px;">${data.title}</h2>
-      <p style="font-size: 0.88rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 16px;">
-        ${data.client} • Role: ${data.role}
-      </p>
+      <div class="modal-domain">${data.domain}</div>
+      <h2 class="modal-title">${data.title}</h2>
+      <p class="modal-client">${data.client} • Role: ${data.role}</p>
 
       <!-- Key Metrics Row -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; background: rgba(0, 209, 255, 0.04); border: 1px solid rgba(0, 209, 255, 0.15); border-radius: var(--radius-sm); padding: 12px 14px;">
+      <div class="modal-metrics">
         ${data.metrics.map(m => `
-          <div>
-            <div style="font-family: var(--font-mono); font-size: 1.15rem; font-weight: 700; color: #a5f3fc;">${m.value}</div>
-            <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted);">${m.label}</div>
+          <div class="modal-metric">
+            <div class="modal-metric-value">${m.value}</div>
+            <div class="modal-metric-label">${m.label}</div>
           </div>
         `).join('')}
       </div>
@@ -692,30 +391,28 @@ function initMoonaStackApp() {
       <div class="modal-tabs">
         <button class="modal-tab-btn active" data-pane="tab-summary">Executive Summary</button>
         <button class="modal-tab-btn" data-pane="tab-arch">System Architecture</button>
-        <button class="modal-tab-pane-btn modal-tab-btn" data-pane="tab-handshake">Request Handshake</button>
-        <button class="modal-tab-btn" data-pane="tab-testing">Testing & QA Rigor</button>
+        <button class="modal-tab-btn" data-pane="tab-handshake">Request Handshake</button>
+        <button class="modal-tab-btn" data-pane="tab-testing">Testing &amp; QA Rigor</button>
       </div>
 
       <!-- Pane 1: Summary -->
       <div class="modal-tab-pane active" id="tab-summary">
-        <p style="font-size: 0.94rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px;">
-          ${data.executiveSummary}
-        </p>
-        <h4 style="font-size: 0.95rem; margin-bottom: 10px; color: var(--text-highlight);">Technology Stack & Tooling:</h4>
-        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;">
-          ${data.stack.map(tech => `<span class="work-tag" style="background: rgba(0, 209, 255, 0.08); border-color: rgba(0, 209, 255, 0.25); color: #7dd3fc;">${tech}</span>`).join('')}
+        <p class="modal-text">${data.executiveSummary}</p>
+        <h4 class="modal-subheading">Technology Stack &amp; Tooling:</h4>
+        <div class="modal-stack">
+          ${data.stack.map(tech => `<span class="work-tag">${tech}</span>`).join('')}
         </div>
-        <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 0.88rem; color: #6ee7b7;">
+        <div class="modal-impact">
           <strong>Engineering Impact:</strong> ${data.impact}
         </div>
       </div>
 
       <!-- Pane 2: Architecture -->
       <div class="modal-tab-pane" id="tab-arch">
-        <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+        <ul class="modal-list">
           ${data.architecture.map(item => `
-            <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.55;">
-              <span style="color: var(--accent-cyan); font-weight: bold;">•</span>
+            <li>
+              <span class="bullet">•</span>
               <span>${item}</span>
             </li>
           `).join('')}
@@ -724,28 +421,28 @@ function initMoonaStackApp() {
 
       <!-- Pane 3: Handshake -->
       <div class="modal-tab-pane" id="tab-handshake">
-        <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 10px;">
+        <p class="modal-note">
           Standardized JSON payload contract and client-server request/response flow:
         </p>
-        <div class="code-block-container" style="margin: 0;">
+        <div class="code-block-container">
           <pre>${data.handshake}</pre>
         </div>
       </div>
 
       <!-- Pane 4: Testing & QA -->
       <div class="modal-tab-pane" id="tab-testing">
-        <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+        <ul class="modal-list">
           ${data.testingRigor.map(item => `
-            <li style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.55;">
-              <span style="color: #10b981; font-weight: bold;">✓</span>
+            <li>
+              <span class="tick">✓</span>
               <span>${item}</span>
             </li>
           `).join('')}
         </ul>
       </div>
 
-      <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-        <span style="font-size: 0.8rem; color: var(--text-muted);">MoonaStack Enterprise Verified Case Study</span>
+      <div class="modal-footer">
+        <span>MoonaStack Enterprise Verified Case Study</span>
         <a href="#contact" class="btn btn-primary btn-sm modal-inquire-btn" onclick="document.getElementById('projectModal').classList.remove('active'); document.body.style.overflow='';">
           Discuss Similar Project &rarr;
         </a>
@@ -790,51 +487,15 @@ function initMoonaStackApp() {
     if (e.target === projectModal) closeProjectModal();
   });
 
-  // Esc key to close any modal
+  // Esc key to close modal
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeProjectModal();
-      document.getElementById('sheetsGuideModal')?.classList.remove('active');
-      document.body.style.overflow = '';
     }
   });
 
   /* ==========================================================================
-     8. Google Apps Script Setup Guide Modal
-     ========================================================================== */
-  const openSheetsGuideBtn = document.getElementById('openSheetsGuideBtn');
-  const sheetsGuideModal = document.getElementById('sheetsGuideModal');
-  const closeGuideModalBtn = document.getElementById('closeGuideModalBtn');
-  const copyScriptBtn = document.getElementById('copyScriptBtn');
-  const appsScriptCode = document.getElementById('appsScriptCode');
-
-  openSheetsGuideBtn?.addEventListener('click', () => {
-    sheetsGuideModal?.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  });
-
-  const closeGuide = () => {
-    sheetsGuideModal?.classList.remove('active');
-    document.body.style.overflow = '';
-  };
-
-  closeGuideModalBtn?.addEventListener('click', closeGuide);
-  sheetsGuideModal?.addEventListener('click', (e) => {
-    if (e.target === sheetsGuideModal) closeGuide();
-  });
-
-  copyScriptBtn?.addEventListener('click', () => {
-    if (!appsScriptCode) return;
-    navigator.clipboard.writeText(appsScriptCode.textContent || '').then(() => {
-      copyScriptBtn.textContent = 'Copied!';
-      setTimeout(() => {
-        copyScriptBtn.textContent = 'Copy Code';
-      }, 2500);
-    });
-  });
-
-  /* ==========================================================================
-     8B. Interactive Scope & Engagement Estimator Controller
+     6. Interactive Scope & Engagement Estimator Controller
      ========================================================================== */
   const estimatorData = {
     tech: [
@@ -843,7 +504,7 @@ function initMoonaStackApp() {
         serviceKey: 'api',
         title: 'FastAPI Microservice & Async Worker Sprint',
         subtitle: 'Sub-50ms REST/GraphQL endpoints, Celery workers & Pydantic V2',
-        timeline: '⏱ Estimated Delivery: 2–3 Weeks',
+        timeline: 'Estimated Delivery: 2–3 Weeks',
         kicker: 'TECH TRACK ENGAGEMENT',
         draft: 'Hi Raheel, I am an engineering leader looking for assistance with our FastAPI microservices and async backend architecture. Key requirements include: ',
         deliverables: [
@@ -858,7 +519,7 @@ function initMoonaStackApp() {
         serviceKey: 'ai',
         title: 'Autonomous AI Agents & Enterprise RAG Pipeline',
         subtitle: 'Production LLM pipelines, VectorStores & multi-tool workflows',
-        timeline: '⏱ Estimated Delivery: 3–4 Weeks',
+        timeline: 'Estimated Delivery: 3–4 Weeks',
         kicker: 'TECH TRACK ENGAGEMENT',
         draft: 'Hi Raheel, we want to integrate autonomous AI agent workflows and zero-hallucination RAG with our proprietary data. Key requirements include: ',
         deliverables: [
@@ -873,7 +534,7 @@ function initMoonaStackApp() {
         serviceKey: 'audit',
         title: '5-Day Technical Code & Architecture Audit',
         subtitle: 'Comprehensive repo diagnostic, query profiling & ready-to-merge PRs',
-        timeline: '⏱ Estimated Delivery: 5 Business Days',
+        timeline: 'Estimated Delivery: 5 Business Days',
         kicker: 'TECH TRACK ENGAGEMENT',
         draft: 'Hi Raheel, we would like a 5-Day Technical Architecture Audit for our repository to pinpoint performance bottlenecks and security issues. Our stack is: ',
         deliverables: [
@@ -888,7 +549,7 @@ function initMoonaStackApp() {
         serviceKey: 'retainer',
         title: 'Dedicated Senior Principal Retainer (Weekly/Monthly)',
         subtitle: '20–40 hrs/week senior bandwidth embedded in your sprints',
-        timeline: '⏱ Dedicated Sprint Bandwidth: 20–40 hrs/wk',
+        timeline: 'Dedicated Sprint Bandwidth: 20–40 hrs/wk',
         kicker: 'TECH TRACK ENGAGEMENT',
         draft: 'Hi Raheel, our team needs dedicated senior engineering capacity embedded into our sprint backlog. We need help with: ',
         deliverables: [
@@ -905,7 +566,7 @@ function initMoonaStackApp() {
         serviceKey: 'web',
         title: 'Automated Client & Dispatch Portal (Save 15h/week)',
         subtitle: 'Self-service client booking, intake, status tracking & Stripe',
-        timeline: '⏱ Turnkey Delivery: 3–4 Weeks · Flat Fee',
+        timeline: 'Turnkey Delivery: 3–4 Weeks · Flat Fee',
         kicker: 'PRODUCTIZED BUSINESS SYSTEM',
         draft: 'Hi Raheel, our business wants to build an automated client portal to eliminate manual receptionist/dispatching work. Our current process is: ',
         deliverables: [
@@ -920,7 +581,7 @@ function initMoonaStackApp() {
         serviceKey: 'web',
         title: 'Speed-Optimized Digital Platform & Lead Engine',
         subtitle: 'Ultra-fast conversion platform turning ad clicks into booked leads',
-        timeline: '⏱ Turnkey Delivery: 2–3 Weeks · Flat Fee',
+        timeline: 'Turnkey Delivery: 2–3 Weeks · Flat Fee',
         kicker: 'PRODUCTIZED BUSINESS SYSTEM',
         draft: 'Hi Raheel, we are running ad campaigns and need a blazing-fast, high-converting digital platform that captures leads. Details: ',
         deliverables: [
@@ -935,7 +596,7 @@ function initMoonaStackApp() {
         serviceKey: 'other',
         title: 'Custom Workflow & Systems Automation',
         subtitle: 'Automate manual handoffs between CRM, billing & spreadsheets',
-        timeline: '⏱ Turnkey Delivery: 2–3 Weeks · Flat Fee',
+        timeline: 'Turnkey Delivery: 2–3 Weeks · Flat Fee',
         kicker: 'PRODUCTIZED BUSINESS SYSTEM',
         draft: 'Hi Raheel, we have disconnected software tools and want to automate our internal business operations. Details: ',
         deliverables: [
@@ -1029,7 +690,7 @@ function initMoonaStackApp() {
   renderEstimator();
 
   /* ==========================================================================
-     9. Services Links to Pre-fill Contact Form
+     7. Services Links to Pre-fill Contact Form
      ========================================================================== */
   window.preselectBoutiqueService = (serviceKey, customDraft) => {
     const serviceSelect = document.getElementById('service');
@@ -1067,7 +728,7 @@ function initMoonaStackApp() {
   });
 
   /* ==========================================================================
-     10. Contact Form Submission & Lead Dispatch (with Google Sheets & Local Fallback)
+     8. Contact Form Submission & Lead Dispatch
      ========================================================================== */
   const contactForm = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
@@ -1132,22 +793,22 @@ function initMoonaStackApp() {
           // Live Google Apps Script Web App submission
           await fetch(GOOGLE_APPS_SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors', // standard cross-origin POST for Google Apps Script Web Apps
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
           });
         } else {
-          // LocalStorage fallback when URL is still the default placeholder
-          const existingLeads = JSON.parse(localStorage.getItem('moonastack_inquiries') || localStorage.getItem('moonstack_inquiries') || '[]');
+          // LocalStorage fallback
+          const existingLeads = JSON.parse(localStorage.getItem('moonastack_inquiries') || '[]');
           existingLeads.push(formData);
           localStorage.setItem('moonastack_inquiries', JSON.stringify(existingLeads));
-          await new Promise(r => setTimeout(r, 650)); // realistic network feel
+          await new Promise(r => setTimeout(r, 600));
         }
 
         // Display Success Feedback
         formStatus.innerHTML = `
-          <strong>Inquiry Dispatched Successfully!</strong><br>
-          Thank you, ${formData.name}. Our technical solutions team will review your project requirements and respond within 24 business hours.
+          <strong>Inquiry Sent Successfully!</strong><br>
+          Thank you, ${formData.name}. Our technical team will review your project requirements and respond within 24 hours.
         `;
         formStatus.className = 'form-feedback success';
         formStatus.style.display = 'block';
@@ -1155,13 +816,13 @@ function initMoonaStackApp() {
       } catch (err) {
         console.error('Submission error:', err);
         formStatus.innerHTML = `
-          <strong>Submission Error:</strong> Unable to dispatch inquiry. Please email us directly at <a href="mailto:raheel@moonastack.com" style="color: var(--accent-cyan); text-decoration: underline;">raheel@moonastack.com</a>.
+          <strong>Submission Error:</strong> Unable to dispatch inquiry. Please email us directly at <a href="mailto:raheel@moonastack.com" style="color: var(--primary); text-decoration: underline;">raheel@moonastack.com</a>.
         `;
         formStatus.className = 'form-feedback';
         formStatus.style.display = 'block';
-        formStatus.style.background = 'rgba(239, 68, 68, 0.12)';
-        formStatus.style.border = '1px solid rgba(239, 68, 68, 0.3)';
-        formStatus.style.color = '#f87171';
+        formStatus.style.background = '#fdeded';
+        formStatus.style.border = '1px solid #f5c2c7';
+        formStatus.style.color = '#c2413b';
       } finally {
         submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
