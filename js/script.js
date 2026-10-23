@@ -816,7 +816,7 @@ function initMoonaStackApp() {
       } catch (err) {
         console.error('Submission error:', err);
         formStatus.innerHTML = `
-          <strong>Submission Error:</strong> Unable to dispatch inquiry. Please email us directly at <a href="mailto:raheel@moonastack.com" style="color: var(--primary); text-decoration: underline;">raheel@moonastack.com</a>.
+          <strong>Submission Error:</strong> Unable to dispatch inquiry. Please email us directly at <a href="mailto:raheel@moonastack.tech" style="color: var(--primary); text-decoration: underline;">raheel@moonastack.tech</a>.
         `;
         formStatus.className = 'form-feedback';
         formStatus.style.display = 'block';
