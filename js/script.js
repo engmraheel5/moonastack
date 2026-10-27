@@ -14,8 +14,18 @@ function initMoonaStackApp() {
      ========================================================================== */
   const mobileToggle = document.getElementById('mobileToggle');
   const navMenu = document.getElementById('navMenu');
+  const navBackdrop = document.getElementById('navBackdrop');
   const siteHeader = document.getElementById('siteHeader');
-  const navLinks = document.querySelectorAll('.nav-link');
+  const navLinks = document.querySelectorAll('#navMenu a');
+
+  const closeMobileMenu = () => {
+    if (!navMenu || !mobileToggle) return;
+    navMenu.classList.remove('mobile-open');
+    mobileToggle.classList.remove('active');
+    mobileToggle.setAttribute('aria-expanded', 'false');
+    navBackdrop?.classList.remove('active');
+    document.body.style.overflow = '';
+  };
 
   if (mobileToggle && navMenu) {
     mobileToggle.addEventListener('click', (e) => {
@@ -23,30 +33,40 @@ function initMoonaStackApp() {
       const isOpen = navMenu.classList.toggle('mobile-open');
       mobileToggle.classList.toggle('active', isOpen);
       mobileToggle.setAttribute('aria-expanded', isOpen.toString());
+      navBackdrop?.classList.toggle('active', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    // Close mobile drawer when clicking any link
+    // Close mobile drawer when clicking any link inside the menu (including CTA)
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         if (navMenu.classList.contains('mobile-open')) {
-          navMenu.classList.remove('mobile-open');
-          mobileToggle.classList.remove('active');
-          mobileToggle.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
+          closeMobileMenu();
         }
       });
     });
 
-    // Close when tapping outside the menu
+    // Close when tapping the backdrop or outside the menu
+    navBackdrop?.addEventListener('click', closeMobileMenu);
+
     document.addEventListener('click', (e) => {
       if (navMenu.classList.contains('mobile-open') && !navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
-        navMenu.classList.remove('mobile-open');
-        mobileToggle.classList.remove('active');
-        mobileToggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+        closeMobileMenu();
       }
     });
+
+    // Close mobile menu on Escape key or when resizing back to desktop
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navMenu.classList.contains('mobile-open')) {
+        closeMobileMenu();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 992 && navMenu.classList.contains('mobile-open')) {
+        closeMobileMenu();
+      }
+    }, { passive: true });
   }
 
   // Header shadow on scroll
@@ -646,6 +666,16 @@ function initMoonaStackApp() {
         if (match) {
           activeEstimatorScope = match;
           renderEstimator();
+          // On stacked mobile viewports, smoothly scroll the updated preview card into view if below fold
+          if (window.innerWidth <= 768) {
+            const previewCard = document.getElementById('estimatorPreviewCard');
+            if (previewCard) {
+              const rect = previewCard.getBoundingClientRect();
+              if (rect.top > window.innerHeight * 0.75 || rect.bottom > window.innerHeight) {
+                previewCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+            }
+          }
         }
       });
     });
@@ -718,7 +748,7 @@ function initMoonaStackApp() {
     }
   };
 
-  const serviceButtons = document.querySelectorAll('.service-link');
+  const serviceButtons = document.querySelectorAll('.service-link, .service-action');
   serviceButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();

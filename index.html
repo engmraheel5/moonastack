@@ -69,7 +69,8 @@
       </a>
 
       <!-- Navigation Links -->
-      <nav aria-label="Primary Navigation">
+      <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
+      <nav class="site-nav" aria-label="Primary Navigation">
         <ul class="nav-menu" id="navMenu">
           <li><a href="#specializations" class="nav-link">Services</a></li>
           <li><a href="#dual-track" class="nav-link">How We Partner</a></li>
@@ -78,7 +79,7 @@
           <li><a href="#boutique-edge" class="nav-link">Why Us</a></li>
           <li><a href="#engagements" class="nav-link">Pricing Models</a></li>
           <li class="mobile-drawer-cta">
-            <a href="#contact" class="btn btn-primary btn-block">Book Tech Call</a>
+            <a href="#contact" class="btn btn-primary btn-block mobile-cta-link">Book Tech Call</a>
           </li>
         </ul>
       </nav>
@@ -522,40 +523,40 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>Who Writes Code</strong></td>
-                <td><span class="cross-red">✕</span> Junior bench staff post-sale</td>
-                <td><span class="cross-red">✕</span> Unverified skill level</td>
-                <td class="col-boutique"><span class="check-green">✓</span> 100% Principal Architect</td>
+                <td data-label="Factor"><strong>Who Writes Code</strong></td>
+                <td data-label="Large Agency"><span class="cross-red">✕</span> Junior bench staff post-sale</td>
+                <td data-label="Marketplace Freelancer"><span class="cross-red">✕</span> Unverified skill level</td>
+                <td class="col-boutique" data-label="MoonaStack Studio"><span class="check-green">✓</span> 100% Principal Architect</td>
               </tr>
               <tr>
-                <td><strong>Communication</strong></td>
-                <td><span class="cross-red">✕</span> Account managers &amp; ticket queues</td>
-                <td><span class="cross-red">✕</span> Sporadic emails or delayed replies</td>
-                <td class="col-boutique"><span class="check-green">✓</span> Direct Slack / Discord channel</td>
+                <td data-label="Factor"><strong>Communication</strong></td>
+                <td data-label="Large Agency"><span class="cross-red">✕</span> Account managers &amp; ticket queues</td>
+                <td data-label="Marketplace Freelancer"><span class="cross-red">✕</span> Sporadic emails or delayed replies</td>
+                <td class="col-boutique" data-label="MoonaStack Studio"><span class="check-green">✓</span> Direct Slack / Discord channel</td>
               </tr>
               <tr>
-                <td><strong>Capacity</strong></td>
-                <td><span class="cross-red">✕</span> 30+ simultaneous client accounts</td>
-                <td><span class="cross-red">✕</span> Oversubscribed across gig platforms</td>
-                <td class="col-boutique"><span class="check-green">✓</span> Strictly capped at 2–3 clients</td>
+                <td data-label="Factor"><strong>Capacity</strong></td>
+                <td data-label="Large Agency"><span class="cross-red">✕</span> 30+ simultaneous client accounts</td>
+                <td data-label="Marketplace Freelancer"><span class="cross-red">✕</span> Oversubscribed across gig platforms</td>
+                <td class="col-boutique" data-label="MoonaStack Studio"><span class="check-green">✓</span> Strictly capped at 2–3 clients</td>
               </tr>
               <tr>
-                <td><strong>Turnaround</strong></td>
-                <td><span class="cross-red">✕</span> 3–4 weeks kickoff decks</td>
-                <td><span class="cross-red">✕</span> Inconsistent deadlines</td>
-                <td class="col-boutique"><span class="check-green">✓</span> First PRs within 48 hours</td>
+                <td data-label="Factor"><strong>Turnaround</strong></td>
+                <td data-label="Large Agency"><span class="cross-red">✕</span> 3–4 weeks kickoff decks</td>
+                <td data-label="Marketplace Freelancer"><span class="cross-red">✕</span> Inconsistent deadlines</td>
+                <td class="col-boutique" data-label="MoonaStack Studio"><span class="check-green">✓</span> First PRs within 48 hours</td>
               </tr>
               <tr>
-                <td><strong>Testing &amp; QA</strong></td>
-                <td><span class="cross-red">✕</span> Separate billed add-on</td>
-                <td><span class="cross-red">✕</span> Rare or superficial tests</td>
-                <td class="col-boutique"><span class="check-green">✓</span> &gt;90% automated test coverage</td>
+                <td data-label="Factor"><strong>Testing &amp; QA</strong></td>
+                <td data-label="Large Agency"><span class="cross-red">✕</span> Separate billed add-on</td>
+                <td data-label="Marketplace Freelancer"><span class="cross-red">✕</span> Rare or superficial tests</td>
+                <td class="col-boutique" data-label="MoonaStack Studio"><span class="check-green">✓</span> &gt;90% automated test coverage</td>
               </tr>
               <tr>
-                <td><strong>Pricing</strong></td>
-                <td><span class="cross-red">✕</span> Opaque hourly billing &amp; creep</td>
-                <td><span class="cross-red">✕</span> Low bid with endless add-ons</td>
-                <td class="col-boutique"><span class="check-green">✓</span> Flat fee or transparent weekly retainers</td>
+                <td data-label="Factor"><strong>Pricing</strong></td>
+                <td data-label="Large Agency"><span class="cross-red">✕</span> Opaque hourly billing &amp; creep</td>
+                <td data-label="Marketplace Freelancer"><span class="cross-red">✕</span> Low bid with endless add-ons</td>
+                <td class="col-boutique" data-label="MoonaStack Studio"><span class="check-green">✓</span> Flat fee or transparent weekly retainers</td>
               </tr>
             </tbody>
           </table>
